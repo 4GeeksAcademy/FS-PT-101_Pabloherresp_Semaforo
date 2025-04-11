@@ -1,26 +1,35 @@
 import React from "react";
+import {useState} from "react"
 
-//include images into your bundle
-import rigoImage from "../../img/rigo-baby.jpg";
+import Luz from "./Luz.jsx"
 
-//create your first component
+let colores = ["red","green","yellow"]
+
 const Home = () => {
-	return (
-		<div className="text-center">
-            
+	const [color, setColor] = useState("")
+	const [purpleEnabled, setPurple] = useState(false)
 
-			<h1 className="text-center mt-5">Hello Rigo!</h1>
-			<p>
-				<img src={rigoImage} />
-			</p>
-			<a href="#" className="btn btn-success">
-				If you see this green button... bootstrap is working...
-			</a>
-			<p>
-				Made by{" "}
-				<a href="http://www.4geeksacademy.com">4Geeks Academy</a>, with
-				love!
-			</p>
+	const newLight = () => {
+		setPurple(true)
+		colores.push("purple")
+	}
+
+	const randomColor = () => {
+		setColor(colores[Math.floor(Math.random()*colores.length)])
+	}
+
+	return (
+		<div className="container d-flex p-5 w-50">
+			<div className="d-inline-flex flex-column justify-content-center mx-auto p-3 rounded-4 bg-dark">
+				<Luz color="red" elegido={color} stateFunction={setColor}/>
+				<Luz color="yellow" elegido={color} stateFunction={setColor}/>
+				<Luz color="green" elegido={color} stateFunction={setColor}/>
+				{purpleEnabled ? <Luz color="purple" elegido={color} stateFunction={setColor}/> : ""}
+			</div>
+			<div className="ms-5">
+				<button onClick={randomColor} type="button" className="btn btn-primary m-5">Random Light</button>
+				<button onClick={newLight} type="button" className="btn btn-primary m-5">New Purple Light</button>
+			</div>
 		</div>
 	);
 };
